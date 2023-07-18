@@ -1,0 +1,29 @@
+{
+  "name": "lukso-tracking-app",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "dotenv -- ts-node-dev --respawn --exit-child --quiet src/index.ts",
+    "build": "rm -rf build; yarn run check && tsup src/index.ts --clean --sourcemap --format cjs --out-dir build",
+    "check": "tsc --noEmit",
+    "serve": "dotenv -- node build/index.js",
+    "start-db": "docker-compose up -d",
+    "deploy-db": "dotenv -c -- prisma migrate deploy"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "5.0.0",
+    "dayjs": "^1.11.9",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.2.1",
+    "express": "^4.18.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/uuid": "^9.0.2",
+    "prisma": "^5.0.0"
+  }
+}
