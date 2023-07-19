@@ -1,5 +1,5 @@
-const express = require("express");
-const app = express();
+import prisma from './prismaClient'
+import express, { Request, Response } from "express";
 
 import { saveWalletBalanceAndPersist } from './wallet-balance/get-walletBalance'
 
@@ -18,7 +18,19 @@ const main = async () => {
 
   }, 1000 * 60 * 60 * 24)
 
-  app.get("/", (req:any, res:any) => res.send("OK"))
+  app.get("/walletBalance", async (req: Request, res: Response) => {
+    const walletBalanceData = await prisma.luksoData.findMany({
+      where: {
+        address: '0xc92F4b3905754eA8E49Ea9B4B698d40825eF2743',
+      },
+      orderBy: {
+        creationDate: 'asc'
+      },
+    });
+    res.json(walletBalanceData);
+  });
+
+  app.get("/", (req: Request, res: Response) => res.send("OK"))
 
   app.listen(4000, () => {
     console.log(`Server started at: http://localhost:4000`)

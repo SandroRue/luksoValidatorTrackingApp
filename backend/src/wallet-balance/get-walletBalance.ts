@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { PrismaClient } from '@prisma/client'
+import prisma from '../prismaClient'
 import { v4 } from 'uuid'
 
 export const getWalletBalance = async () => {
@@ -29,14 +29,13 @@ export const saveWalletBalanceAndPersist = async () => {
         const data = {address, creationDate, amount}
         console.log(data)
 
-        const prisma = new PrismaClient()
         const uuid = () => v4()
 
         await prisma.luksoData.create({
             data: {
                 id: uuid(),
                 address: address,
-                creationDate: creationDate,
+                creationDate: creationDate, 
                 amount: amount
             },
         })

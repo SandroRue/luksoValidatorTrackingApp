@@ -4,7 +4,7 @@
 #     env: node
 #     region: frankfurt
 #     plan: free
-#     buildCommand: cd backend && yarn install --frozen-lockfile && yarn build
+#     buildCommand: cd backend && yarn install --frozen-lockfile --ignore-platform && yarn build
 #     startCommand: cd backend && yarn deploy-db && yarn serve
 #     healthCheckPath: /
 #     # domains:
@@ -20,7 +20,7 @@
   #   env: static
   #   region: frankfurt
   #   plan: free
-  #   buildCommand: cd frontend && yarn install --frozen-lockfile && yarn build
+  #   buildCommand: cd frontend && yarn install --frozen-lockfile --ignore-platform && yarn build
   #   staticPublishPath: ./frontend/build
   #   # domains:
   #   #   - clubmaster.io
