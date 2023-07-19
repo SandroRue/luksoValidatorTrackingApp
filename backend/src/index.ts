@@ -21,7 +21,7 @@ const main = async () => {
   app.get("/walletBalance", async (req: Request, res: Response) => {
     const walletBalanceData = await prisma.luksoData.findMany({
       where: {
-        address: '0xc92F4b3905754eA8E49Ea9B4B698d40825eF2743',
+        address: '0xc92f4b3905754ea8e49ea9b4b698d40825ef2743',
       },
       orderBy: {
         creationDate: 'asc'
