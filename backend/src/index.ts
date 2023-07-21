@@ -6,7 +6,13 @@ import { saveWalletBalanceAndPersist } from './wallet-balance/get-walletBalance'
 
 const main = async () => {
   const app = express()
-  app.disable("x-powered-by")
+
+  app.use((_req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+  
+    next();
+  });
 
   const setImmediateDeleteInterval = (callback: () => void, interval: number) => {
     callback() //used that the first result is received at time 0s (instead of the defined number in the interval)
