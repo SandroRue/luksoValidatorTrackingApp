@@ -8,17 +8,17 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } fro
 interface WalletBalance {
     id: string,
     address: string
-    creationDate: string
+    creationDate: Date
     amount: number
 }
 
-const GetWalletData = () => {
+const GetWalletDataWithAverageDate = () => {
 
     const [walletData, setWalletData] = useState<WalletBalance[]>([])
 
     const fetchWalletData = async () => {
         try {
-            const response = await fetch('https://trackingapp-backend.onrender.com/walletBalance', {
+            const response = await fetch('https://trackingapp-backend.onrender.com/walletDailyBalance', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,12 +42,12 @@ const GetWalletData = () => {
                 <Col xs={10}>
                     <Card bg='success' text='white' className="text-center">
                         <Card.Title>
-                            Lukso Staking Rewards
+                            Lukso Staking Rewards Daily Average
                         </Card.Title>
                         <Card.Body>
                             <ResponsiveContainer width="100%" height={500}>
                                 <LineChart data={walletData}>
-                                    <Line type="monotone" dataKey="amount" stroke="white" strokeWidth={3} />
+                                    <Line type="monotone" dataKey="_avg.amount" stroke="white" strokeWidth={3} />
                                     <CartesianGrid stroke="white" />
                                     <XAxis dataKey="creationDate" angle={-90} textAnchor="end" stroke="white" height={220} />
                                     <YAxis stroke="white" />
@@ -64,4 +64,4 @@ const GetWalletData = () => {
 
 }
 
-export default GetWalletData
+export default GetWalletDataWithAverageDate

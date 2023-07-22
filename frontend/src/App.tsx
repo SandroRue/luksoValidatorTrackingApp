@@ -1,11 +1,13 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import GetWalletData from './components/GetWalletData'
+import GetWalletDataWithTimestamps from './components/GetWalletDataWithTimestamps'
+import GetWalletDataWithAverageDate from './components/GetWalletDataWithAverageDate'
 
 function App() {
   return (
     <div>
-      <GetWalletData/>
+      <GetWalletDataWithTimestamps/>
+      <GetWalletDataWithAverageDate/>
     </div>
   );
 }
