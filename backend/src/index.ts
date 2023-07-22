@@ -1,8 +1,8 @@
 import prisma from './prismaClient'
 import express, { Request, Response } from "express";
-import cors from "cors";
 
-import { saveWalletBalanceAndPersist } from './wallet-balance/get-walletBalance'
+import { saveWalletBalanceAndPersist } from './luksoData/save-walletBalanceAndPersist'
+import { saveDailyAverageWalletBalanceAndPersist } from './luksoData/save-dailvAverageWalletBalanceAndPersist';
 
 const main = async () => {
   const app = express()
@@ -22,6 +22,7 @@ const main = async () => {
   setImmediateDeleteInterval(async () => {
 
     await saveWalletBalanceAndPersist()
+    await saveDailyAverageWalletBalanceAndPersist()
     console.log('Data saved')
 
   }, 1000 * 60 * 60 * 24)
@@ -39,7 +40,7 @@ const main = async () => {
   });
 
   app.get("/walletDailyBalance", async (req: Request, res: Response) => {
-    const dailyAverage = await prisma.luksoData.groupBy({
+    const dailyAverage = await prisma.luksoDataAverage.groupBy({
       where: {
         address: '0xc92f4b3905754ea8e49ea9b4b698d40825ef2743',
       },

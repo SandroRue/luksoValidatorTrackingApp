@@ -16,3 +16,10 @@ model LuksoData {
     creationDate    DateTime
     amount          Float
 }
+
+model LuksoDataAverage {
+    id              String     @id
+    address         String
+    creationDate    DateTime @default(now()) @db.Date
+    amount          Float
+}
