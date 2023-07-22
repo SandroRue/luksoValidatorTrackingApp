@@ -26,7 +26,7 @@ export const saveWalletBalanceAndPersist = async () => {
         if (res !== null) {
             const address: string = res.data.address
             const amount: number = parseFloat(res.data.ether)
-            const creationDate = dayjs().toISOString()
+            const creationDate: string = dayjs().toISOString()
             const data = { address, creationDate, amount }
             console.log(data)
 

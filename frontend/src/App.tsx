@@ -1,10 +1,10 @@
-import './App.css';
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import GetWalletData from './components/GetWalletData'
 
 function App() {
   return (
     <div>
-      <div>test</div>
       <GetWalletData/>
     </div>
   );

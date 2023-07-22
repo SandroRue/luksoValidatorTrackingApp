@@ -38,6 +38,22 @@ const main = async () => {
     res.json(walletBalanceData);
   });
 
+  app.get("/walletDailyBalance", async (req: Request, res: Response) => {
+    const dailyAverage = await prisma.luksoData.groupBy({
+      where: {
+        address: '0xc92f4b3905754ea8e49ea9b4b698d40825ef2743',
+      },
+      by: ['creationDate'],
+      _avg: {
+        amount: true,
+      },
+      orderBy: {
+        creationDate: 'asc'
+      },
+    });
+    res.json(dailyAverage);
+  });
+
   app.get("/", (req: Request, res: Response) => res.send("OK"))
 
   app.listen(4000, () => {
