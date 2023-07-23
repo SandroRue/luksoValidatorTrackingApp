@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import prisma from '../prismaClient'
 import { v4 } from 'uuid'
 
-export const saveWalletBalanceAndPersist = async () => {
+export const saveTimestampWalletBalanceAndPersist = async () => {
     try {
         const res = await getWalletBalance()
         if (res !== null) {

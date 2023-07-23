@@ -6,11 +6,11 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } fro
 interface WalletBalance {
     id: string,
     address: string
-    creationDate: string
+    creationDate: Date
     amount: number
 }
 
-const GetWalletDataWithTimestamps = () => {
+const GetWalletDataWithAverageData = () => {
 
     const [walletData, setWalletData] = useState<WalletBalance[]>([])
     const [isLoading, setisLoading] = useState(false)
@@ -18,19 +18,14 @@ const GetWalletDataWithTimestamps = () => {
     const fetchWalletData = async () => {
         try {
             setisLoading(true)
-            const response = await fetch('https://trackingapp-backend.onrender.com/walletBalance', {
+            const response = await fetch('https://trackingapp-backend.onrender.com/walletDailyBalance', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
             }).then((response) => response.json());
-            if (response !== null) {
-                setWalletData(response)
-                setisLoading(false)
-            }
-            else {
-                return null
-            }
+            setWalletData(response)
+            setisLoading(false)
         }
         catch (err) {
             console.log(err)
@@ -41,16 +36,17 @@ const GetWalletDataWithTimestamps = () => {
         fetchWalletData()
     }, [])
 
+
     return (
         <Card bg='success' text='white' className="text-center">
             <Card.Title>
-                Lukso Staking Rewards
+                Lukso Staking Rewards Daily Average
             </Card.Title>
             <Card.Body>
                 {!isLoading ?
                     <ResponsiveContainer width="100%" height={500}>
                         <LineChart data={walletData}>
-                            <Line type="monotone" dataKey="amount" stroke="white" strokeWidth={3} />
+                            <Line type="monotone" dataKey="_avg.amount" stroke="white" strokeWidth={3} />
                             <CartesianGrid stroke="white" />
                             <XAxis dataKey="creationDate" angle={-90} textAnchor="end" stroke="white" height={220} />
                             <YAxis stroke="white" />
@@ -67,4 +63,4 @@ const GetWalletDataWithTimestamps = () => {
 
 }
 
-export default GetWalletDataWithTimestamps
+export default GetWalletDataWithAverageData

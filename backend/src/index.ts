@@ -1,7 +1,7 @@
 import prisma from './prismaClient'
 import express, { Request, Response } from "express";
 
-import { saveWalletBalanceAndPersist } from './luksoData/save-walletBalanceAndPersist'
+import { saveTimestampWalletBalanceAndPersist } from './luksoData/save-timestampWalletBalanceAndPersist'
 import { saveDailyAverageWalletBalanceAndPersist } from './luksoData/save-dailvAverageWalletBalanceAndPersist';
 
 const main = async () => {
@@ -21,7 +21,7 @@ const main = async () => {
 
   setImmediateDeleteInterval(async () => {
 
-    await saveWalletBalanceAndPersist()
+    await saveTimestampWalletBalanceAndPersist()
     await saveDailyAverageWalletBalanceAndPersist()
     console.log('Data saved')
 
