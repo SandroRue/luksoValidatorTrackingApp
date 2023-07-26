@@ -25,14 +25,13 @@ const CalculateWalletValue = () => {
 
     const fetchPriceData = async () => {
         try {
-            const response = await fetch('https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=LYX-USDT', {
+            const response = await fetch('https://trackingapp-backend.onrender.com/walletBalance/luksoPrice', {
                 method: 'GET',
-                mode: 'cors',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain',
                 }
             }).then((response) => response.json());
-            setLuksoPrice(response.data.price)
+            setLuksoPrice(response.price)
         }
         catch (err) {
             console.log(err)

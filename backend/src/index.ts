@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 
 import { saveTimestampWalletBalanceAndPersist } from './luksoData/save-timestampWalletBalanceAndPersist'
 import { saveDailyAverageWalletBalanceAndPersist } from './luksoData/save-dailvAverageWalletBalanceAndPersist';
+import { fetchLuksoPriceData } from './luksoData/get-luksoPrice'
 
 const main = async () => {
   const app = express()
@@ -37,6 +38,11 @@ const main = async () => {
       },
     });
     res.json(walletBalanceData);
+  });
+
+  app.get("/luksoPrice", async (req: Request, res: Response) => {
+    const luksoPrice = await fetchLuksoPriceData()
+    res.json(luksoPrice)
   });
 
   app.get("/walletDailyBalance", async (req: Request, res: Response) => {
