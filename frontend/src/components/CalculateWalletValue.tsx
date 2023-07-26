@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react"
 import Card from 'react-bootstrap/Card';
-
-interface WalletBalance {
-    id: string,
-    address: string
-    creationDate: Date
-    amount: number
-}
+import { WalletModel } from './DatabaseModel'
 
 const CalculateWalletValue = () => {
 
-    const [lastWalletValue, setLastWalletValue] = useState<WalletBalance>()
+    const [lastWalletValue, setLastWalletValue] = useState<WalletModel>()
+    const [luksoPrice, setLuksoPrice] = useState()
 
     const fetchWalletData = async () => {
         try {
@@ -28,8 +23,25 @@ const CalculateWalletValue = () => {
         }
     }
 
+    const fetchPriceData = async () => {
+        try {
+            const response = await fetch('https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=LYX-USDT', {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((response) => response.json());
+            setLuksoPrice(response.data.price)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         fetchWalletData()
+        fetchPriceData()
     }, [])
 
 
@@ -37,7 +49,7 @@ const CalculateWalletValue = () => {
         <Card bg='success' text='white' className="text-center">
             <Card.Title>Wallet Value</Card.Title>
             <Card.Body>
-                {lastWalletValue?.amount} Lyx
+                {lastWalletValue?.amount} Lyx - {luksoPrice} $
             </Card.Body>
         </Card>
     )

@@ -2,17 +2,11 @@ import { useEffect, useState } from "react"
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-
-interface WalletBalance {
-    id: string,
-    address: string
-    creationDate: Date
-    amount: number
-}
+import { WalletModel } from './DatabaseModel'
 
 const GetWalletDataWithAverageData = () => {
 
-    const [walletData, setWalletData] = useState<WalletBalance[]>([])
+    const [walletData, setWalletData] = useState<WalletModel[]>([])
     const [isLoading, setisLoading] = useState(false)
 
     const fetchWalletData = async () => {
