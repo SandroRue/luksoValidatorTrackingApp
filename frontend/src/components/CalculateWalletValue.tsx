@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import Card from 'react-bootstrap/Card';
-import { WalletModel } from './DatabaseModel'
+import { LuksoAPIModel, WalletModel } from './FrontendModel'
 
 const CalculateWalletValue = () => {
 
     const [lastWalletValue, setLastWalletValue] = useState<WalletModel>()
-    const [luksoPrice, setLuksoPrice] = useState()
+    const [luksoPrice, setLuksoPrice] = useState<LuksoAPIModel>()
 
     const fetchWalletData = async () => {
         try {
@@ -25,16 +25,26 @@ const CalculateWalletValue = () => {
 
     const fetchPriceData = async () => {
         try {
-            const response = await fetch('https://trackingapp-backend.onrender.com/walletBalance/luksoPrice', {
+            const response = await fetch('https://trackingapp-backend.onrender.com/luksoPrice', {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'text/plain',
+                    'Content-Type': 'application/json',
                 }
             }).then((response) => response.json());
-            setLuksoPrice(response.price)
+            setLuksoPrice(response)
         }
         catch (err) {
             console.log(err)
+        }
+    }
+
+    const calculateWalletValue = () => {
+        if(lastWalletValue?.amount !== undefined && luksoPrice !== undefined) {
+            const value = lastWalletValue?.amount * parseFloat(luksoPrice?.price)
+            return Number((value).toFixed(1))
+        }
+        else {
+            console.log('Calculation failed')
         }
     }
 
@@ -48,7 +58,9 @@ const CalculateWalletValue = () => {
         <Card bg='success' text='white' className="text-center">
             <Card.Title>Wallet Value</Card.Title>
             <Card.Body>
-                {lastWalletValue?.amount} Lyx - {luksoPrice} $
+                <div>{lastWalletValue?.amount} Lyx</div>
+                <div>{luksoPrice?.price} $</div>
+                <div>{calculateWalletValue()} $</div>
             </Card.Body>
         </Card>
     )

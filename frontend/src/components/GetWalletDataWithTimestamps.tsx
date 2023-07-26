@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import { WalletModel } from './DatabaseModel'
+import { WalletModel } from './FrontendModel'
 
 const GetWalletDataWithTimestamps = () => {
 
