@@ -1,8 +1,22 @@
 import { useEffect, useState } from "react"
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { WalletModel } from './FrontendModel'
+import { TooltipProps } from 'recharts';
+import { ValueType, NameType, } from 'recharts/types/component/DefaultTooltipContent';
+
+const CustomTooltip = ({active, payload, label}: TooltipProps<ValueType, NameType>) => {
+    if (active) {
+        const value = payload?.[0].value
+        return (
+            <div className="custom-tooltip">
+                <p className="label">{`${value}`}</p>
+            </div>
+        );
+    }
+    return null;
+};
 
 const GetWalletDataWithAverageData = () => {
 
@@ -40,10 +54,12 @@ const GetWalletDataWithAverageData = () => {
                 {!isLoading ?
                     <ResponsiveContainer width="100%" height={500}>
                         <LineChart data={walletData}>
-                            <Line type="monotone" dataKey="_avg.amount" stroke="white" strokeWidth={3} />
-                            <CartesianGrid stroke="white" />
+                            <CartesianGrid stroke="white" strokeDasharray="3 3" />
                             <XAxis dataKey="creationDate" angle={-90} textAnchor="end" stroke="white" height={220} />
                             <YAxis stroke="white" />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Legend />
+                            <Line type="monotone" dataKey="_avg.amount" stroke="white" strokeWidth={3} activeDot={{ r: 6 }} />
                         </LineChart>
                     </ResponsiveContainer> :
                     <Spinner animation="border" role="status">

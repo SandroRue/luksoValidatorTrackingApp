@@ -38,8 +38,28 @@ const CalculateWalletValue = () => {
         }
     }
 
+    const lastWalletValueRounded = () => {
+        if (lastWalletValue?.amount !== undefined) {
+            const lastWalletValueRounded = (lastWalletValue?.amount).toFixed(1)
+            return lastWalletValueRounded
+        }
+        else {
+            console.log('No number available')
+        }
+    }
+
+    const luksoPriceRounded = () => {
+        if (luksoPrice?.price !== undefined) {
+            const lastLuksoValue = (parseFloat(luksoPrice?.price)).toFixed(1)
+            return lastLuksoValue
+        }
+        else {
+            console.log('No number available')
+        }
+    }
+
     const calculateWalletValue = () => {
-        if(lastWalletValue?.amount !== undefined && luksoPrice !== undefined) {
+        if (lastWalletValue?.amount !== undefined && luksoPrice !== undefined) {
             const value = lastWalletValue?.amount * parseFloat(luksoPrice?.price)
             return Number((value).toFixed(1))
         }
@@ -58,8 +78,8 @@ const CalculateWalletValue = () => {
         <Card bg='success' text='white' className="text-center">
             <Card.Title>Wallet Value</Card.Title>
             <Card.Body>
-                <div>{lastWalletValue?.amount} Lyx</div>
-                <div>{luksoPrice?.price} $</div>
+                <div>{lastWalletValueRounded()} Lyx</div>
+                <div>{luksoPriceRounded()} $</div>
                 <div>{calculateWalletValue()} $</div>
             </Card.Body>
         </Card>
